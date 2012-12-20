@@ -1,12 +1,6 @@
 #!/bin/sh
-cd `dirname $0`
-
-MAKE=make
-case `uname` in
-*BSD)
-	MAKE=gmake
-	;;
-esac
-
-"${MAKE}"
-exec erl -pa $PWD/ebin $PWD/deps/*/ebin -boot start_sasl -s reloader -s webnesia
+# NOTE: mustache templates need \\ because they are not awesome.
+exec erl -pa ebin edit deps/*/ebin -boot start_sasl \\
+    -sname webnesia_dev \\
+    -s webnesia \\
+    -s reloader

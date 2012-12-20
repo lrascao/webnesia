@@ -82,11 +82,3 @@ local_path(Components, Module) ->
 %%      Equivalent to local_path(Components, ?MODULE).
 local_path(Components) ->
     local_path(Components, ?MODULE).
-
-
-%%
-%% Tests
-%%
--include_lib("eunit/include/eunit.hrl").
--ifdef(TEST).
--endif.

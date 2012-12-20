@@ -41,17 +41,19 @@ upgrade() ->
 %% @spec init([]) -> SupervisorTree
 %% @doc supervisor callback.
 init([]) ->
-    Ip = case os:getenv("MOCHIWEB_IP") of false -> "0.0.0.0"; Any -> Any end,
-    WebConfig = [
-         {ip, Ip},
-                 {port, 8000},
-                 {docroot, webnesia_deps:local_path(["priv", "www"])}],
-    Web = {webnesia_web,
-           {webnesia_web, start, [WebConfig]},
-           permanent, 5000, worker, dynamic},
-
+    Web = web_specs(webnesia_web, 8080),
     Processes = [Web],
-    {ok, {{one_for_one, 10, 10}, Processes}}.
+    Strategy = {one_for_one, 10, 10},
+    {ok,
+     {Strategy, lists:flatten(Processes)}}.
+
+web_specs(Mod, Port) ->
+    WebConfig = [{ip, {0,0,0,0}},
+                 {port, Port},
+                 {docroot, webnesia_deps:local_path(["priv", "www"])}],
+    {Mod,
+     {Mod, start, [WebConfig]},
+     permanent, 5000, worker, dynamic}.
 
 
 %%

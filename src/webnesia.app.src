@@ -1,3 +1,4 @@
+%% -*- erlang -*-
 {application, webnesia,
  [{description, "webnesia"},
   {vsn, "0.01"},
