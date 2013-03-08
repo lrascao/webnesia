@@ -173,15 +173,23 @@ delete (Table, Key) ->
 %%
 %% @end
 %%--------------------------------------------------------------------
-create_table_test () ->
-    ?assert(webnesia_db:create_table("test_table", "[\"test_key\",\"test_field\"]") =:= [34, "ok", 34]).
+delete_table_test_() ->
+    {setup,
+     fun setup/0,
+     fun cleanup/1,
+     fun(_) ->
+         [?_assertEqual([34, "ok", 34], 
+                        webnesia_db:create_table("test_table", "[\"test_key\",\"test_field\"]")),
+          ?_assertEqual([34, "ok", 34],
+                        webnesia_db:delete_table("test_table"))
+         ]
+     end
+    }.
 
-%--------------------------------------------------------------------
-%% @doc
-%%
-%% @end
-%%--------------------------------------------------------------------
-delete_table_test () ->
-    ?assert(webnesia_db:delete_table("test_table") =:= [34, "ok", 34]).
+setup() ->
+    mnesia:start().
+
+cleanup(_) ->
+    mnesia:stop().
 
 -endif.
