@@ -1,0 +1,4 @@
+deps
+*.swp
+ebin
+.eunit
