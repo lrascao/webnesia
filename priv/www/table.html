@@ -20,6 +20,11 @@
         </tr>
     </script>
     <script id="table_footer_tmpl" type="text/x-jquery-tmpl">
+        <tr>ddd
+            
+            <td>dddd</td><td>dddd</td>
+        
+        </tr>
         <td colspan="${number_of_attributes - 1}">
             {{if total_rows}}
             showing ${offset + 1} - ${number_of_rows + offset} of ${total_rows} records
@@ -53,6 +58,8 @@
     <script type="text/javascript" charset="utf-8">    
         $(document).ready(function() {
             render_table(5, 0);
+            $("#create_record").click(function () { create_record(); });
+            $("#delete_record").click(function () { delete_record(); });
         });
     </script>
 	<link rel="stylesheet" href="css/layout.css" type="text/css" media="screen" title="no title" charset="utf-8" />
@@ -65,7 +72,9 @@
     <thead><tr id="table_header"></tr></thead>
     <tbody id="table_body"></tbody>
     <tfoot><tr id="table_footer"></tr></tfoot>
-</table>
 
+</table>
+    <button id="create_record" type="button">create record</button>
+    <button id="delete_record" type="button">delete record</button>
 </body>
 </html>

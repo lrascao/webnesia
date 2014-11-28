@@ -15,6 +15,7 @@ function render_table(limit, offset)
             for (key in data) {
                 data[key].keys = tableInfo.attributes;
                 data[key].table = table;
+                data[key].table = table;
             }
             $("#table_body").html($("#table_body_tmpl").tmpl(data));
             activity = false;
@@ -57,6 +58,12 @@ function delete_test_table () {
     }});   
 }
 
+function delete_test_table (name) {
+    $.ajax({url: "/" + name, type: "DELETE", async: false, success: function (data) {
+        location.reload();
+    }});   
+}
+
 function show_activity () {
     $("#activity_indicator").fadeIn(125, function () {
         if (activity) {
@@ -71,4 +78,29 @@ function hide_activity () {
             show_activity();
         }
     });
+}
+
+function create_table () {
+   $.ajax({url: "/" + $("#table_name").val(), type: "PUT", async: false, data: JSON.stringify(["id", "timestamp", "test_field"]), success: function (data) {
+     location.reload();
+ }});
+}
+
+function delete_table () {
+    var checkValues = $('input[name=my_check_box]:checked').map(function() {
+        //return $(this).parent().text();
+        delete_test_table($(this).val());
+        return $(this).val();
+    }).get();
+
+ //alert(checkValues);
+    //do something with your checkValues array
+}
+
+function create_record() {
+    alert("create record");
+}
+
+function delete_record() {
+    alert("delete record");
 }

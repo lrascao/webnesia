@@ -9,6 +9,7 @@
 	<script type="text/javascript" charset="utf-8" src="js/webnesia.js"></script>
     <script id="tables_tmpl" type="text/x-jquery-tmpl">
         <tr>
+            <td style="white-space: normal; width:15px;"><input type="checkbox" name="my_check_box" value=${$item.data}></td>
             <td><a href="table.html?${$item.data}">${$item.data}</a></td>
         </tr>
     </script>
@@ -19,6 +20,8 @@
             });
             $("#create_test_table").click(function () { create_test_table(); });
             $("#delete_test_table").click(function () { delete_test_table(); });
+            $("#create_table").click(function () { create_table(); });
+            $("#delete_table").click(function () { delete_table(); });
         });
     </script>
 	<link rel="stylesheet" href="css/layout.css" type="text/css" media="screen" title="no title" charset="utf-8" />
@@ -28,13 +31,18 @@
 
 <table class="listing">
     <caption><strong>webnesia</strong> &rarr; <a href="/_utils/">tables</a></caption>
-    <thead><tr id="table_header"><th>name</th></tr></thead>
+    <thead><tr id="table_header"><th></th><th>name</th></tr></thead>
     <tbody class="content" id="table_body"></tbody>
 </table>
 
 <p>
     <button id="create_test_table" type="button">create test table</button>
     <button id="delete_test_table" type="button">delete test table</button>
+</p>
+<p>
+    <input id="table_name" type="text" value="new_table_name" />
+    <button id="create_table" type="button">create table</button>
+    <button id="delete_table" type="button">delete table</button>
 </p>
 
 </body>
