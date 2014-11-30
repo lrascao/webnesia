@@ -7,7 +7,9 @@ function render_table(limit, offset)
     var table = window.location.href.slice(window.location.href.indexOf("?") + 1);
     $.get("/" + table, function(tableInfo) {
         $("#table_caption").html($("#table_caption_tmpl").tmpl(tableInfo.table_name));
+        tableInfo["attributes"].unshift(" ");
         $("#table_header").html($("#table_header_tmpl").tmpl(tableInfo.attributes));
+        tableInfo["attributes"].shift(" ");
         $.get("/" + table + "/_all_records?limit=" + limit + "&skip=" + offset, function(data) {
             data.number_of_attributes = tableInfo.number_of_attributes;
             $("#table_footer").html($("#table_footer_tmpl").tmpl(data));
@@ -64,6 +66,12 @@ function delete_test_table (name) {
     }});   
 }
 
+function delete_test_record (tname,rid) {
+    $.ajax({url: "/" + tname + "/" +rid, type: "DELETE", async: false, success: function (data) {
+        location.reload();
+    }});   
+}
+
 function show_activity () {
     $("#activity_indicator").fadeIn(125, function () {
         if (activity) {
@@ -102,5 +110,11 @@ function create_record() {
 }
 
 function delete_record() {
-    alert("delete record");
+    var checkValues = $('input[name=my_check_box]:checked').map(function() {
+        //return $(this).parent().text();
+        //alert($("#tname").text());
+        //alert($(this).parent().next("td").attr("id"));
+        delete_test_record($("#tname").text(),$(this).parent().next("td").attr("id"));
+        return $(this).val();
+    }).get();
 }
