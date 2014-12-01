@@ -66,7 +66,7 @@ function delete_test_table (name) {
     }});   
 }
 
-function delete_test_record (tname,rid) {
+function delete_test_record2 (tname,rid) {
     $.ajax({url: "/" + tname + "/" +rid, type: "DELETE", async: false, success: function (data) {
         location.reload();
     }});   
@@ -96,25 +96,36 @@ function create_table () {
 
 function delete_table () {
     var checkValues = $('input[name=my_check_box]:checked').map(function() {
-        //return $(this).parent().text();
         delete_test_table($(this).val());
         return $(this).val();
     }).get();
-
- //alert(checkValues);
-    //do something with your checkValues array
 }
 
 function create_record() {
-    alert("create record");
+          var _len = $("#table tr").length;        
+            //$("#table").append("<tr id="+_len+" align='center'>"
+                $("#table").append("<tr id='new_record' align='center'>"
+                       +"<td>"+_len+"</td>"
+                       +"<td><input type='text' id='col1'/></td>"
+                       +"<td><input type='text' id='col2'/></td>"
+                       +"<td><input type='text' id='col3'/></td>"
+                   +"</tr>");       
 }
 
 function delete_record() {
     var checkValues = $('input[name=my_check_box]:checked').map(function() {
-        //return $(this).parent().text();
-        //alert($("#tname").text());
-        //alert($(this).parent().next("td").attr("id"));
-        delete_test_record($("#tname").text(),$(this).parent().next("td").attr("id"));
+        delete_test_record2($("#tname").text(),$(this).parent().next("td").attr("id"));
         return $(this).val();
     }).get();
+}
+
+function update_record() {
+     $.ajax({
+        url: "/" + $("#tname").text(), type: "POST", async: false, data: JSON.stringify({
+        "id": $("#col1").attr("value"), "test_field_1": $("#col2").attr("value"), 
+        "test_field": $("#col3").attr("value")
+        })
+    });
+     location.reload();
+
 }

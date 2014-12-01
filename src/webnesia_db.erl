@@ -159,9 +159,15 @@ read (Table, Key) ->
 %% @end
 %%--------------------------------------------------------------------
 delete (Table, Key) ->
-    {atomic, Response} = mnesia:transaction(fun() -> mnesia:delete({list_to_atom(Table), mochijson2:decode(Key)}) end),
-    webnesia_response:encode(Response).
-
+    case is_integer(Key) of
+         true -> 
+            {atomic, Response} = mnesia:transaction(fun() -> mnesia:delete({list_to_atom(Table), mochijson2:decode(Key)}) end),
+            webnesia_response:encode(Response);
+        false -> 
+            {atomic, Response} = mnesia:transaction(fun() -> mnesia:delete({list_to_atom(Table), list_to_binary(Key)}) end),
+            webnesia_response:encode(Response)
+    end.
+    
 %%
 %% Tests
 %%

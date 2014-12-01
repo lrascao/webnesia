@@ -55,6 +55,7 @@
             render_table(5, 0);
             $("#create_record").click(function () { create_record(); });
             $("#delete_record").click(function () { delete_record(); });
+            $("#update_record").click(function () { update_record(); });
         });
     </script>
 	<link rel="stylesheet" href="css/layout.css" type="text/css" media="screen" title="no title" charset="utf-8" />
@@ -62,7 +63,7 @@
 </head>
 <body>
 
-<table>
+<table id="table">
     <caption id="table_caption"></caption>
     <thead><tr id="table_header"></tr></thead>
     <tbody id="table_body"></tbody>
@@ -71,5 +72,6 @@
 </table>
     <button id="create_record" type="button">create record</button>
     <button id="delete_record" type="button">delete record</button>
+    <button id="update_record" type="button">update record</button>
 </body>
 </html>
