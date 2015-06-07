@@ -7,15 +7,15 @@
 	<script type="text/javascript" charset="utf-8" src="js/jquery.tmpl.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="js/webnesia.js"></script>
     <script id="table_caption_tmpl" type="text/x-jquery-tmpl">
-        <strong>webnesia</strong> &rarr; <a href="/_utils/">tables</a> &rarr; ${} <span id="activity_indicator"><strong>&#10074;</strong></span>
+        <strong>webnesia</strong> &rarr; <a href="/_utils/">tables</a> &rarr; <span id="tname">${}</span> <span id="activity_indicator"><strong>&#10074;</strong></span>
     </script>
     <script id="table_header_tmpl" type="text/x-jquery-tmpl">
         <th>${}</th>
     </script>
     <script id="table_body_tmpl" type="text/x-jquery-tmpl">
-        <tr>
+        <tr><td style="white-space: normal; width:15px;"><input type="checkbox" name="my_check_box"></td>
             {{each(i, key) $item.data.keys}}
-            <td>{{if i == 0}}<a href="/_utils/record.html?${$item.data.table}/${$item.data[key]}">${$item.data[key]}</a>{{else}}${$item.data[key]}{{/if}}</td>
+            <td id=${$item.data[key]}>{{if i == 0}}<a href="/_utils/record.html?${$item.data.table}/${$item.data[key]}">${$item.data[key]}</a>{{else}}${$item.data[key]}{{/if}}</td>
             {{/each}}
         </tr>
     </script>
@@ -50,9 +50,12 @@
             {{/if}}
         </td>
     </script>
-    <script type="text/javascript" charset="utf-8">    
+    <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
             render_table(5, 0);
+            $("#create_record").click(function () { create_record(); });
+            $("#delete_record").click(function () { delete_record(); });
+            $("#update_record").click(function () { update_record(); });
         });
     </script>
 	<link rel="stylesheet" href="css/layout.css" type="text/css" media="screen" title="no title" charset="utf-8" />
@@ -60,12 +63,15 @@
 </head>
 <body>
 
-<table>
+<table id="table">
     <caption id="table_caption"></caption>
     <thead><tr id="table_header"></tr></thead>
     <tbody id="table_body"></tbody>
     <tfoot><tr id="table_footer"></tr></tfoot>
-</table>
 
+</table>
+    <button id="create_record" type="button">create record</button>
+    <button id="delete_record" type="button">delete record</button>
+    <button id="update_record" type="button">update record</button>
 </body>
 </html>

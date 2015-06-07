@@ -159,9 +159,15 @@ read (Table, Key) ->
 %% @end
 %%--------------------------------------------------------------------
 delete (Table, Key) ->
-    {atomic, Response} = mnesia:transaction(fun() -> mnesia:delete({list_to_atom(Table), mochijson2:decode(Key)}) end),
-    webnesia_response:encode(Response).
-
+    case is_integer(Key) of
+         true -> 
+            {atomic, Response} = mnesia:transaction(fun() -> mnesia:delete({list_to_atom(Table), mochijson2:decode(Key)}) end),
+            webnesia_response:encode(Response);
+        false -> 
+            {atomic, Response} = mnesia:transaction(fun() -> mnesia:delete({list_to_atom(Table), list_to_binary(Key)}) end),
+            webnesia_response:encode(Response)
+    end.
+    
 %%
 %% Tests
 %%
@@ -173,15 +179,23 @@ delete (Table, Key) ->
 %%
 %% @end
 %%--------------------------------------------------------------------
-create_table_test () ->
-    ?assert(webnesia_db:create_table("test_table", "[\"test_key\",\"test_field\"]") =:= [34, "ok", 34]).
+delete_table_test_() ->
+    {setup,
+     fun setup/0,
+     fun cleanup/1,
+     fun(_) ->
+         [?_assertEqual([34, "ok", 34], 
+                        webnesia_db:create_table("test_table", "[\"test_key\",\"test_field\"]")),
+          ?_assertEqual([34, "ok", 34],
+                        webnesia_db:delete_table("test_table"))
+         ]
+     end
+    }.
 
-%--------------------------------------------------------------------
-%% @doc
-%%
-%% @end
-%%--------------------------------------------------------------------
-delete_table_test () ->
-    ?assert(webnesia_db:delete_table("test_table") =:= [34, "ok", 34]).
+setup() ->
+    mnesia:start().
+
+cleanup(_) ->
+    mnesia:stop().
 
 -endif.

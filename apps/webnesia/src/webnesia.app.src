@@ -1,14 +1,13 @@
+%% -*- erlang -*-
 {application, webnesia,
  [{description, "webnesia"},
-  {vsn, "0.01"},
+  {vsn, "0.0.2"},
   {modules, [
-    webnesia,
     webnesia_app,
     webnesia_sup,
     webnesia_web,
-    webnesia_deps,
-	webnesia_db,
-	webnesia_response
+	  webnesia_db,
+	  webnesia_response
   ]},
   {registered, []},
   {mod, {webnesia_app, []}},
