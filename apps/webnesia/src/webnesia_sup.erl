@@ -22,12 +22,9 @@ start_link() ->
 %% @spec init([]) -> SupervisorTree
 %% @doc supervisor callback.
 init([]) ->
-    WebConfig = [{ip, {0,0,0,0}},
-                 {port, 8080},
-                 {docroot, "priv/www"}],
     Strategy = {one_for_one, 10, 10},
     {ok, {Strategy, [{webnesia_web,
-                      {webnesia_web, start_link, [WebConfig]},
+                      {webnesia_web, start_link, []},
                       permanent, 5000, worker, dynamic}]}}.
 
 %%

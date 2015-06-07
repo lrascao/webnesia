@@ -6,11 +6,15 @@
 -module(webnesia_web).
 -author('Bruno Pedro <bpedro@tarpipe.com>').
 
--export([start_link/1, stop/0, loop/2]).
+-export([start_link/0, stop/0, loop/2]).
 
 %% External API
 
-start_link(Options) ->
+start_link() ->
+    {ok, Port} = application:get_env(webnesia, port),
+    Options = [{ip, {0,0,0,0}},
+               {port, Port},
+               {docroot, "priv/www"}],
     {DocRoot, Options1} = get_option(docroot, Options),
     Loop = fun (Req) ->
                    ?MODULE:loop(Req, DocRoot)
