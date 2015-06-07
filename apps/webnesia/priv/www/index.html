@@ -10,11 +10,15 @@
 	<script type="text/javascript" charset="utf-8" src="js/webnesia.js"></script>
     <script id="tables_tmpl" type="text/x-jquery-tmpl">
         <tr>
-            <td style="white-space: normal; width:15px;"><input type="checkbox" name="my_check_box" value=${$item.data}></td>
-            <td><a href="table.html?${$item.data}">${$item.data}</a></td>
+            <td style="white-space: normal; width:15px;">
+                <input type="checkbox" name="my_check_box" value=${$item.data}>
+            </td>
+            <td>
+                <a href="table.html?${$item.data}">${$item.data}</a>
+            </td>
         </tr>
     </script>
-    <script type="text/javascript" charset="utf-8">    
+    <script type="text/javascript" charset="utf-8">
         $(document).ready(function() {
             $.get('/_all_tables', function(data) {
                 $('#tables_tmpl').tmpl(data).appendTo('#table_body');
@@ -25,7 +29,8 @@
             $("#delete_table").click(function () { delete_table(); });
         });
     </script>
-	<link rel="stylesheet" href="css/layout.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+	<link rel="stylesheet" href="css/layout.css" type="text/css"
+          media="screen" title="no title" charset="utf-8" />
 	<title>webnesia</title>
 </head>
 <body>
