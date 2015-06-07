@@ -4,4 +4,5 @@ ebin
 .eunit
 .rebar/
 erl_crash.dump
+_rel/
 

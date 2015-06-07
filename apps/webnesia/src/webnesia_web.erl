@@ -6,11 +6,11 @@
 -module(webnesia_web).
 -author('Bruno Pedro <bpedro@tarpipe.com>').
 
--export([start/1, stop/0, loop/2]).
+-export([start_link/1, stop/0, loop/2]).
 
 %% External API
 
-start(Options) ->
+start_link(Options) ->
     {DocRoot, Options1} = get_option(docroot, Options),
     Loop = fun (Req) ->
                    ?MODULE:loop(Req, DocRoot)
@@ -44,7 +44,7 @@ loop(Req, DocRoot) ->
                                         Req:respond({200, [{"Content-type", "application/json"}], webnesia_db:list(TableName, list_to_integer(proplists:get_value("limit", QueryString, "0")), list_to_integer(proplists:get_value("skip", QueryString, "0")))});
                                     Id ->
                                         Req:respond({200, [{"Content-type", "application/json"}], webnesia_db:read(TableName, Id)})
-                                end;     
+                                end;
                             _ ->
                                 Req:respond({200, [{"Content-type", "application/json"}], webnesia_db:info(Table)})
                         end
