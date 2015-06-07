@@ -6,15 +6,8 @@ webnesia is a REST interface to Erlang's mnesia. It provides an API and a Web fr
 
 ## Installation instructions
 
-1. Make sure you have added rebar in $PATH 
-
-2. Webnesia depends on mochiweb. To download dependencies `rebar get-deps`
-
-3. To compile `rebar compile`
-
-4. run `./start-dev.sh`;
-
-5. open your browser on [http://localhost:8000/_utils/](http://localhost:8000/_utils/).
+1. make console
+2. open your browser on [http://localhost:8080/_utils/](http://localhost:8080/_utils/).
 
 ## API
 
@@ -29,7 +22,7 @@ Right now, these are the supported methods:
 *   `POST /<table_name>`: insert a new record into the table name `table_name` or edit an existing record.
 
     The payload must contain the record data in the form of a JSON key-value pair list. Example:
-    
+
     `[{"id": 1, "timestamp": 1289145623708, "test_field": "the brown fox jumps over the lazy dog"}]`
 
 *   `DELETE /<table_name>`: delete the table named `table_name`.
@@ -43,6 +36,6 @@ Right now, these are the supported methods:
 *   `GET /<table_name>/_all_records`: read all records from table `table_name`.
 
     There are two optional parameters:
-    
+
     * `limit`: limit the query to a given number of records;
     * `skip`: skip a given number of records.
