@@ -1,9 +1,0 @@
-{application,webnesia,
-             [{description,"webnesia"},
-              {vsn,"0.01"},
-              {modules,[webnesia,webnesia_app,webnesia_db,webnesia_deps,
-                        webnesia_response,webnesia_sup,webnesia_web]},
-              {registered,[]},
-              {mod,{webnesia_app,[]}},
-              {env,[]},
-              {applications,[kernel,stdlib,crypto]}]}.
